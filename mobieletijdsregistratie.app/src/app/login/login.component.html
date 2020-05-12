@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h3 class="card-title text-center">FestiTimer</h3>
+          <h6 class="text-center">Werkgeversportaal</h6>
+          <hr>
+          <ngb-alert *ngIf="errorMessage" [type]="'danger'" (close)="errorMessage = undefined">
+            {{ errorMessage }}
+          </ngb-alert>
+          <button class="btn btn-lg bg-blue btn-block mt-4 mb-2 text-light" type="submit" (click)="login()">Identificeer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

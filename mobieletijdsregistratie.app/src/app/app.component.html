@@ -1,0 +1,22 @@
+<div *ngIf="innerWidth <= 1024">
+    <app-sidebar *ngIf="isAuthenticated"></app-sidebar>
+    <app-login *ngIf="!isAuthenticated"></app-login>
+
+    <notifier-container [routerLink]="['notificaties']"></notifier-container>
+
+    <ng-template #registrationModal let-modal>
+        <div class="modal-header bg-blue text-light">
+            <span class="modal-title h5 " id="modal-basic-title">Registratie {{ registrationStatus }}.</span>
+            <button type="button" class="close" (click)="modal.dismiss()">
+                <span class="text-light" [innerHTML]="'x' | feather:24"></span>
+            </button>
+        </div>
+        <div class="modal-footer">
+            <button class="btn bg-lightgreen text-light" [routerLink]="['registratie']"
+                (click)="modal.dismiss(); registrationStatus = null">
+                <span>Sluit</span>
+            </button>
+        </div>
+    </ng-template>
+</div>
+<app-resolution-error *ngIf="innerWidth > 1024"></app-resolution-error>

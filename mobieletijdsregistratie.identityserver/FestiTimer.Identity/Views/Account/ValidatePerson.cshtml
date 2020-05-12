@@ -1,0 +1,20 @@
+﻿@model FestiTimer.Identity.Models.ValidatePersonModel
+
+<div class="row">
+    <div class="col-12">
+        <h2>Pincode validatie</h2>
+    </div>
+    <div class="col-12 mt-4">
+        <h4><b>Voornaam: </b>@Model.User.FirstName</h4>
+        <h4><b>Achternaam: </b>@Model.User.LastName</h4>
+    </div>
+    <div class="col-12 mt-4">
+        <form class="float-left mr-2" method="post" asp-controller="Account" asp-action="LoginQrCode" asp-route-userId="@Model.User.Id"
+              asp-route-returnUrl="@Model.ReturnUrl">
+            <input type="text" class="form-control form-control-lg" name="pincodeInput" placeholder="Geef een pincode">
+            <button class="btn btn-lg btn-primary float-left mt-4">
+                <span>Valideer</span>
+            </button>
+        </form>
+    </div>
+</div>

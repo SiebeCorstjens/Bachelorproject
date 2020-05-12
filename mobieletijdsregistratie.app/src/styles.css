@@ -1,0 +1,49 @@
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~angular-notifier/styles";
+
+.bg-blue {
+    background: #152E4E;
+}
+
+.bg-lightgray {
+    background: lightgray;
+}
+
+.bg-lightgreen {
+    background: #92C464;
+}
+
+.border-blue-2 {
+    border-width: 2px !important;
+    border-color: #152E4E !important;
+}
+
+.modal {
+    top: 60px;
+    position: relative;
+}
+
+.modal-body {
+    background: #FFFFFF;
+}
+
+.modal-footer {
+    background: #FFFFFF;
+}
+
+.modal-content {
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background-color: transparent;
+}
+
+.card {
+    border: 1px solid #152E4E !important;
+    background: whitesmoke;
+}
+
+hr {
+    border-top: 1px solid #152E4E !important;
+}

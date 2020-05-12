@@ -1,0 +1,5 @@
+.filter-collapse {
+    position: absolute; 
+    top: 190px;
+    z-index: 4; 
+}

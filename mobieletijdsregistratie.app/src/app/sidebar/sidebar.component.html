@@ -1,0 +1,40 @@
+<mat-sidenav-container fullscreen hasBackdrop="true" class="sidebar-container">
+  <mat-sidenav #sidebar mode="over" class="sidebar-width bg-white" fixedInViewport="true">
+    <div class="d-flex border-bottom border-dark bg-blue text-light p-2  height-60">
+      <div class="flex-fill p-1 align-self-center">
+        <span class="h5">FestiTimer</span>
+      </div>
+      <div class="flex-fill p-1 align-self-center">
+        <span [innerHTML]="'x' | feather:20" class="float-right" (click)="toggleSidebar()"></span>
+      </div>
+    </div>
+    <ul class="list-group pointer text-black" (click)="toggleSidebar()">
+      <li class="list-group-item bg-light-green" [routerLink]="['']">
+        <span class="mr-2" [innerHTML]="'users' | feather:24"></span>
+        <span class="h6">Personen</span>
+      </li>
+      <li class="list-group-item bg-light-green" [routerLink]="['registratie']">
+        <span class="mr-2" [innerHTML]="'book-open' | feather:24"></span>
+        <span class="h6">Registratie</span>
+      </li>
+      <li class="list-group-item bg-light-green" [routerLink]="['notificaties']">
+        <span class="mr-2" [innerHTML]="'bell' | feather:24"></span>
+        <span class="h6">Notificaties</span>
+      </li>
+    </ul>
+  </mat-sidenav>
+  <mat-sidenav-content class="bg-light-green">
+    <div class="container bg-blue text-light fixed-top">
+      <div class="row pt-2 pb-2 height-60">
+        <div class="col-2 align-self-center">
+          <span [innerHTML]="'menu' | feather:32" (click)="toggleSidebar()"></span>
+        </div>
+        <div class="col-10 align-self-center">
+          <span class="float-right" [innerHTML]="'log-out' | feather:28" (click)="logout()"></span>
+          <span class="float-right mr-3" style="font-size:20px">{{ UserFirstName }}</span>
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

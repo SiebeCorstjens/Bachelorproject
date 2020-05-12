@@ -1,0 +1,122 @@
+<div class="container fixed-top bg-white" style="margin-top: 60px;">
+  <div class="row">
+    <div class="col-12 border-bottom border-blue-2 p-2">
+      <span class="h5 font-weight-bold">Registratie personen</span>
+      <div>{{ currentDate | date:'dd/MM/yyyy HH:mm' }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 p-2 mt-2 d-flex">
+      <div class="flex-fill pr-2">
+        <input class="form-control" type="text" placeholder="Zoek persoon" [(ngModel)]="searchName">
+      </div>
+      <div class="flex-fill pl-2">
+        <button [disabled]="!persons" class="btn bg-blue float-right text-light" (click)="openFilterModal(filterModal)">
+          Filteropties
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="margin-top: 190px;">
+  <div class="row">
+    <div class="col-12 mt-4 text-center" *ngIf="!persons" [hidden]="errorMessage">
+      <div class="spinner-border" role="status"></div>
+    </div>
+    <div class="col-12 p-2" *ngIf="errorMessage">
+      <div class="p-2 rounded bg-lightgray">
+        <span class="h6">{{ errorMessage }}</span>
+      </div>
+    </div>
+    <div class="col-12 p-2" *ngIf="getSelectedFiltersCount() > 0 && filteredPersons.length === 0">
+      <div class="p-2 rounded bg-lightgray">
+        <span class="h6">Geen werkshifts voor de gekozen filter.</span>
+      </div>
+    </div>
+    <div class="col-12 p-2" *ngFor="let person of filteredPersons | filter : searchName">
+      <div class="p-2 rounded bg-lightgray" *ngFor="let workshift of person.workshifts"
+        (click)="openRegistrationDetails(person, workshift)">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <span class="font-weight-bold">{{ person.name }}</span>
+          </div>
+          <div class="col-4">
+            <span class="font-weight-bold">Job</span>
+          </div>
+          <div class="col-8">
+            <span>{{ workshift.job.description }}</span>
+          </div>
+          <div class="col-4">
+            <span class="font-weight-bold">Werktijd</span>
+          </div>
+          <div class="col-8">
+            <span>{{ workshift.startDateTime | date:'HH:mm' }} - {{ workshift.stopDateTime | date:'HH:mm' }}</span>
+          </div>
+          <div class="col-4">
+            <span class="font-weight-bold">Registratie</span>
+          </div>
+          <div class="col-8">
+            <div [ngSwitch]="timerState[workshift.timerState]">
+              <span *ngSwitchCase="timerState.NoState">Niet gestart</span>
+              <span *ngSwitchCase="timerState.StartedState">Gestart</span>
+              <span *ngSwitchCase="timerState.PausedState">Gepauzeerd</span>
+              <span *ngSwitchCase="timerState.StoppedState">Gestopt</span>
+            </div>
+          </div>
+          <div class="col-4">
+            <span [innerHTML]="'clock' | feather:20"
+              *ngIf="timerState[workshift.timerState] === timerState.StartedState"></span>
+          </div>
+          <div class="col-8">
+            <span
+              *ngIf="timerState[workshift.timerState] === timerState.StartedState">{{ workshift.workTime | slice:0:11 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #filterModal let-modal>
+  <div class="modal-header bg-blue text-light">
+    <span class="modal-title h5 " id="modal-basic-title">Selecteer filter(s)</span>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <span class="text-light" [innerHTML]="'x' | feather:24"></span>
+    </button>
+  </div>
+  <div class="modal-body pt-2 pb-2 pr-0 pl-0">
+    <div class="container">
+      <div class="row text-left center-block">
+        <div class="col-12 p-2">
+          <button class="btn" (click)="filters[0].selected = !filters[0].selected">
+            <span class="h5">Job</span>
+          </button>
+          <div class="pt-2" *ngIf="filters[0].selected">
+            <ng-select [items]="jobs" bindLabel="description" bindValue="id" placeholder="Selecteer job"
+              [(ngModel)]="filters[0].value" [searchable]="false" [clearable]="false">
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-12 p-2">
+          <button class="btn" (click)="filters[1].selected = !filters[1].selected">
+            <span class="h5">Registratie</span>
+          </button>
+          <div class="pt-2" *ngIf="filters[1].selected">
+            <ng-select [(ngModel)]="filters[1].value" placeholder="Selecteer registratie" [searchable]="false"
+              [clearable]="false">
+              <ng-option [value]="'NoState'">Niet gestart</ng-option>
+              <ng-option [value]="'StartedState'">Gestart</ng-option>
+              <ng-option [value]="'PausedState'">Gepauzeerd</ng-option>
+              <ng-option [value]="'StoppedState'">Gestopt</ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn bg-lightgreen text-light" (click)="applyFilter()">
+      <span>{{ getSelectedFiltersCount() }} filter(s) toepassen</span>
+    </button>
+  </div>
+</ng-template>
